@@ -1,0 +1,39 @@
+name: Terraform CI/CD till Plan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  conents: read
+
+jobs:
+  JOB_1-Terraform-CI-CD-Plan:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: Environment/test-env
+
+    steps:
+      - name: STEP-1 - Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: STEP-2 - Login to Azure
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        
+      - name: STEP-3 - Checking Terraform Version
+        run: terraform Version
+
+      - name: STEP-4 - Terraform INIT
+        run: terraform init
+
+      - name: STEP-5 - Terraform VALIDATE
+        run: terraform validate
+
+      - name: STEP-6 - Terraform PLAN
+        run: terraform plan 

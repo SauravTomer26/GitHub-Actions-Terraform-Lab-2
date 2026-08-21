@@ -15,7 +15,7 @@ jobs:
       - name: STEP-1 - Checkout Repository
         uses: actions/checkout@v4
 
-      - name: STEP-2 - Logint to Azure
+      - name: STEP-2 - Login to Azure
         uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
