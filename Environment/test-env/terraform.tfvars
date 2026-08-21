@@ -20,7 +20,7 @@ p_sa = {
   }
   "teststorage20082026" = {
     sa_loc       = "japaneast"
-    rg_name      = "Lab-2--dev-rg"
+    rg_name      = "Lab-2--test-rg"
     acc_tier     = "Standard"
     acc_rep_type = "LRS"
   }
