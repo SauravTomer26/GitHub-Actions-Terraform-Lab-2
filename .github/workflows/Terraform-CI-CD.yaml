@@ -27,7 +27,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
       - name: STEP-3 - Checking Terraform Version
-        run: terraform Version
+        run: terraform version
 
       - name: STEP-4 - Terraform INIT
         run: terraform init
