@@ -1,0 +1,48 @@
+name: Multi-stage CI/CD with manual approval
+
+on:
+  workflow-dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Job_1-Terraform-PLAN:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: Environment/test-env
+
+    steps:
+      - name: STEP-1 - CHECKOUT Repo
+        uses: actions/checkout@v4
+
+      - name: STEP-2 - LOGIN to Azure using OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: STEP-3 - Check Terraform VERSION 
+        run: terraform version
+
+      - name: STEP-4 - Terraform Init
+        run: terraform init
+
+      - name: STEP-5 -  Terraform Validate 
+        run: terraform validate 
+
+      - name: STEP-6 - Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: STEP-7 - UPLOAD Terraform Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-terraform-plan
+          path: Environment/test-env/tfplan
+
+
+# JOB 2 here
