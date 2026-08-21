@@ -5,7 +5,7 @@ on:
 
 permissions:
   id-token: write
-  conents: read
+  contents: read
 
 jobs:
   JOB_1-Terraform-CI-CD-Plan:
