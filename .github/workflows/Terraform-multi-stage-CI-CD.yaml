@@ -1,7 +1,7 @@
 name: Multi-stage CI/CD with manual approval
 
 on:
-  workflow-dispatch:
+  workflow_dispatch:
 
 permissions:
   id-token: write
