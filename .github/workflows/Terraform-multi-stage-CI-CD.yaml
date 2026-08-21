@@ -45,4 +45,34 @@ jobs:
           path: Environment/test-env/tfplan
 
 
-# JOB 2 here
+  JOB_2-Terraform-APPLY:
+    needs: Job_1-Terraform-PLAN
+    runs-on: self-hosted
+    environment: TEST_ENV
+
+    defaults:
+      run:
+        working-directory: Environment/test-env
+
+    steps:
+      - name: STEP-1 - CHECKOUT REPO
+        uses: actions/checkout@v4
+
+      - name: STEP-2 - LOGIN to AZURE
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: STEP-3 - TERRAFORM INIT 
+        run: terraform init
+
+      - name: STEP-4 - DOWNLOAD TERRAFORM PLAN ARTIFACT 
+        uses: actions/download-artifact@v4
+        with:
+          name: my-terraform-plan
+          path: Environment/test-env
+
+      - name: STEP-5 - TERRAFORM APPLY
+        run: terraform apply --auto-approve tfplan
